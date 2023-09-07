@@ -1,4 +1,4 @@
-import { Request,Response } from "express";
+import { Request,Response ,NextFunction} from "express";
 //typeORM Object Relational Mapper (ORM)
 import { createConnection, Connection } from 'typeorm';
 //entity list
@@ -7,7 +7,7 @@ import { Product } from '../entity/product.entity';
 import { Bag } from '../entity/bag.entity'; 
 import { Cart } from '../entity/cart.entity'; 
 import { Category } from '../entity/category.entity';
-import { ProductImage } from '../entity/productimage.entiey';
+import { ProductImage } from '../entity/productimage.entity';
 //Send mail
 import MailService from "./../services/mail/index"
 //template ejs email send
@@ -50,20 +50,26 @@ let connection: Connection;
         synchronize: true,
       });
     } catch (error) {
-      console.log('Database connection error:');
+      console.log('Database connection error: middle ware');
     }
   })();
 
   export default  {
-    confirmTokenLogin: async function(req:Request, res:Response) {
+    confirmTokenLogin: async function(req:Request, res:Response,next:NextFunction) {
       //giải nén token
       console.log(req.body);
       try{
         let ResultUser:any=jsonWeb1.verifyToken(req.body.token)
         console.log("ResultUser,",ResultUser);
+        next();
       }
       catch(err){
         console.log("lỗi confirmTokenLogin use.middleware");
+
+        res.status(201).json({
+          status:false,
+          message:"Chưa đăng nhập"
+        })
       }
      },
     }

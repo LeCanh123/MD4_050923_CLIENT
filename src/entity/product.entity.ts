@@ -1,23 +1,28 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne,OneToMany } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne,OneToMany, JoinColumn } from "typeorm"
 import { Category } from "./category.entity" 
-import { ProductImage } from "./productimage.entiey"
+import { ProductImage } from "./productimage.entity"
 
 @Entity()
 export class Product {
     @PrimaryGeneratedColumn()
-    id!: null
+    id!: number
 
     @Column()
-    name!: string 
+    title!: string 
+
+    @Column()
+    price!: number 
+
+    @Column()
+    actualprice!: number 
 
     @Column({
         nullable:true
     })
     block!: string 
 
-    @ManyToOne(() => Category, (category) => category.id)
-    categorys!: Category
-
-    // @OneToMany(() => ProductImage, (productimage) => productimage.id)
-    // productimage!: ProductImage[]
+    @ManyToOne(() => Category, (category) => category.products)
+    category!: Category
+    @OneToMany(() => ProductImage, (productimage) => productimage.products)
+    productimage!: ProductImage[]
 }

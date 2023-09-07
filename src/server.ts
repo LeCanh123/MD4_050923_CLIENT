@@ -5,7 +5,7 @@ dotenv.config()
 // import './entity/typeorm';
 import cors from "cors"
 //npm i --save-dev @types/cors
-import { Googlelogin } from "./firebase"
+// import { Googlelogin } from "./googlefirebase"
 import bodyParser from "body-parser"
   
 // cors();
@@ -14,19 +14,21 @@ const server =express();
 server.set('view engine', 'ejs');
 server.use(cors());
 server.use(express.static(path.join(__dirname, 'public')));
+console.log(path.join(__dirname, 'public'));
+
 //boby parser
 server.use(bodyParser.json());
 
 
 server.use(express.json());
 
-server.use('/google', async (req, res) => {
-  res.send('Hello Anh  Cảnh 111112!');
-  let result = await Googlelogin();
-  res.send(Googlelogin)
-  console.log("result,",result);
+// server.use('/google', async (req, res) => {
+//   res.send('Hello Anh  Cảnh 111112!');
+//   let result = await Googlelogin();
+//   res.send(Googlelogin)
+//   console.log("result,",result);
   
-});
+// });
 
 server.use('/authengoogle', async (req, res) => {
  let key="AIzaSyB1uLTbSCBMyI-amXp2oqsMMd_cl_BqIiA";

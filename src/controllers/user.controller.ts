@@ -188,6 +188,4 @@ export default {
 
     }
   },
-
-
 }

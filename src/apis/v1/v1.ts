@@ -19,7 +19,14 @@ router.post("/userchangeconfirm", userController.userChangeConfirm);
 //Add google user
 router.post("/googleuser", userController.googleAddUser);
 
-//product
+//user product
+import userProduct from "./userProduct.v1"
+router.use("/userproduct", userProduct);
+
+//admin product
+import adminProduct from "./adminProduct.v1"
+router.use("/adminproduct", adminProduct);
+
 
 //middleware
 router.post("/userchecktoken", userMiddlewave.confirmTokenLogin);
