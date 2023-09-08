@@ -12,10 +12,58 @@ const saltRounds = 10;
 
 
 export default {
-    getProduct: async function(req:Request, res:Response) {
-          let userdata= await userGetProductModel.getProduct()
-          console.log(userdata);
-          res.status(userdata.status ? 200 : 413).json(userdata)
-    }
+      getMenProduct: async function(req:Request, res:Response) {
+            let userdata= await userGetProductModel.getMenProduct()
+            console.log(userdata);
+            res.status(userdata.status ? 200 : 413).json(userdata)
+            },
+      addToCart: async function(req:Request, res:Response) {
+
+
+            
+            let addToCartResult= await userGetProductModel.addToCart(req.body)
+            console.log(addToCartResult);
+            // res.status(addToCartResult.status ? 200 : 413).json(addToCartResult)
+            },
+      getCart: async function(req:Request, res:Response) {
+            console.log("vào get cart");
+            
+            let cartData= await userGetProductModel.getCart(req.body.token)
+            console.log(cartData);
+            res.status(200).json(cartData)
+            },
+      deleteProduct: async function(req:Request, res:Response) {
+                  console.log("vào get cart");
+                  
+                  let deleteProductResult= await userGetProductModel.deleteProduct(req.body)
+                  console.log(deleteProductResult);
+                  if(deleteProductResult.status){
+                        return res.status(200).json({
+                              status:true,
+                              message:deleteProductResult.message}
+                              )
+                  }
+                        return res.status(201).json({
+                              status:false,
+                              message:deleteProductResult.message}
+                              )
+            },
+      changeQuantity: async function(req:Request, res:Response) {
+            console.log("vào changeQuantity");
+                  
+            let changeQuantityResult= await userGetProductModel.changeQuantity(req.body)
+            console.log(changeQuantityResult);
+            if(changeQuantityResult.status){
+                  return res.status(200).json({
+                        status:true,
+                        message:changeQuantityResult.message}
+                        )
+            }
+                  return res.status(201).json({
+                        status:false,
+                        message:changeQuantityResult.message}
+                        )
+      },
+
 
 }

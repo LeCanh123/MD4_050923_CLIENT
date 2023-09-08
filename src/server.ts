@@ -1,33 +1,34 @@
 import express from "express"
 import dotenv from "dotenv"
+import path from "path"
 dotenv.config()
 // import './entity/typeorm';
 import cors from "cors"
 //npm i --save-dev @types/cors
-import { Googlelogin } from "./firebase"
+// import { Googlelogin } from "./googlefirebase"
 import bodyParser from "body-parser"
-import { PrismaClient } from '@prisma/client'
-import genEmailString from "./services/template/emailConfirm"
-import mailService from "./services/mail/index"
-import text from "./text"
-
-const prisma = new PrismaClient()
   
 // cors();
 const server =express();
+//ejs
+server.set('view engine', 'ejs');
 server.use(cors());
+server.use(express.static(path.join(__dirname, 'public')));
+console.log(path.join(__dirname, 'public'));
+
+//boby parser
 server.use(bodyParser.json());
 
 
 server.use(express.json());
 
-server.use('/google', async (req, res) => {
-  res.send('Hello Anh  Cảnh 111112!');
-  let result = await Googlelogin();
-  res.send(Googlelogin)
-  console.log("result,",result);
+// server.use('/google', async (req, res) => {
+//   res.send('Hello Anh  Cảnh 111112!');
+//   let result = await Googlelogin();
+//   res.send(Googlelogin)
+//   console.log("result,",result);
   
-});
+// });
 
 server.use('/authengoogle', async (req, res) => {
  let key="AIzaSyB1uLTbSCBMyI-amXp2oqsMMd_cl_BqIiA";
@@ -50,65 +51,9 @@ console.log("err",err);
 });
 
 
-// server.get('/', (req, res) => {
-//     res.send('Hello Anh  Cảnh !');
-//   });
-
-//   server.get('/createuser', async (req, res) => {
-    
-//       const user = await prisma.user.create({
-//         data: {
-        
-//           email: '[{email1:Anhcanhpro@prisma.io},{email2:Anhcanhpro2@gâmil.io}]',
-//         },
-//       })
-//       console.log(user)
-//       res.status(200).json(user)
-    
-//   });
-
-
-  server.get('/getuser', async (req, res) => {
-    
-      const user = await prisma.user.findMany()
-      console.log(user)
-      res.status(200).json(user)
-    
+server.get('/', (req, res) => {
+    res.send('Hello Anh  Cảnh !');
   });
-
-
-
-  server.get('/testmail', async (req, res) => {
-
-    let a=genEmailString({
-      productName:text("vi").hello,
-      productUrl:"canh123.lambogini",
-      receiveName:"ngoccanh124937@gmail.com",//email người nhận
-      confirmLink:"tiktok.com"
-
-    }
- 
-    )
-    console.log(a,"kkkk");
-    
-    res.send(a)
-
-    mailService.sendMail({
-    to: "ngoccanh124937@gmail.com",
-    subject: "Anh Cảnh Nè Cưng",
-    html: a
-
-    })
-
-
-
-
-
-    
-
-});
-
-
   import apiRouter from "./apis/index.api";
 import axios from "axios"
   server.use("/apis", apiRouter);

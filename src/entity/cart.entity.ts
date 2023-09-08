@@ -1,15 +1,16 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne,OneToMany } from "typeorm"
 import { Bag } from "./bag.entity" 
+import { Product } from "./product.entity"
 @Entity()
 export class Cart {
     @PrimaryGeneratedColumn()
-    id!: null
+    id!: number
+
+    // @Column()
+    // productId!: number 
 
     @Column()
-    bagId!: number 
-
-    @Column()
-    productId!: number 
+    quantity!: number 
 
     @Column({
         nullable:true
@@ -17,7 +18,11 @@ export class Cart {
     block!: string
     
     //nhiều cart 1 túi
-    @ManyToOne(() => Bag, (bag) => bag.id)
-    bags!: Bag
+    @ManyToOne(() => Bag, (bag) => bag.carts)
+    bag!: Bag
+
+    //nhiều cart 1 product
+    @ManyToOne(() => Product, (product) => product.carts)
+    products!: Product
 
 }

@@ -6,8 +6,8 @@ export class Bag {
     @PrimaryGeneratedColumn()
     id!: null
 
-    @Column()
-    userId!: number
+    // @Column()
+    // userId!: string
 
     @Column({
         nullable:true
@@ -15,11 +15,11 @@ export class Bag {
     block!: string
     
     //nhiều túi 1 user
-    @ManyToOne(() => User, (user) => user.id)
+    @ManyToOne(() => User, (user) => user.bags)
     user!: User
 
-    //1 túi nhiều cart
-    // @OneToMany(() => Cart, (cart) => cart.id)
-    // bags!: Cart[]
+    // 1 túi nhiều cart
+    @OneToMany(() => Cart, (cart) => cart.bag)
+    carts!: Cart[]
 
 }

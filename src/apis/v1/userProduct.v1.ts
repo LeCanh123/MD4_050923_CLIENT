@@ -3,7 +3,12 @@ import userGetProductController from "../../controllers/userGetProduct.controlle
 
 
 const router = express.Router();
-router.get("/getproduct", userGetProductController.getProduct);
+// http://localhost:4000/apis/v1/userproduct/getmenproduct/
+router.get("/getmenproduct", userGetProductController.getMenProduct);
+router.post("/addtocart", userGetProductController.addToCart);
+router.post("/getcart", userGetProductController.getCart);
+router.post("/deleteproduct", userGetProductController.deleteProduct);
+router.post("/changequantity", userGetProductController.changeQuantity);
 
 
 export default router;
