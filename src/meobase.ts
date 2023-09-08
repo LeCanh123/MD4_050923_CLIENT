@@ -3,14 +3,15 @@ import { getStorage } from "firebase/storage";
 import {ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDNTcpCQnzazH92jstOxOwXFRJh28qJxVs",
-  authDomain: "canh-e5c23.firebaseapp.com",
-  projectId: "canh-e5c23",
-  storageBucket: "canh-e5c23.appspot.com",
-  messagingSenderId: "610467766064",
-  appId: "1:610467766064:web:503666d7c25d4f634532f5",
-  measurementId: "G-G6H5QG1CHQ"
+  apiKey: "AIzaSyB1uLTbSCBMyI-amXp2oqsMMd_cl_BqIiA",
+  authDomain: "uphinh-7980b.firebaseapp.com",
+  projectId: "uphinh-7980b",
+  storageBucket: "uphinh-7980b.appspot.com",
+  messagingSenderId: "304935927335",
+  appId: "1:304935927335:web:dbf026e4b046e560159802",
+  measurementId: "G-S50ZSN7Y3F"
 };
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -72,22 +73,22 @@ export async function uploadFileToStorage(fileUploads:any, folderName:any, buffe
     if failed => false
     if success => array url link
 */
-// export async function getFileInFolder(folderName:any) {
-//   const listRef = ref(storage, folderName);
+export async function getFileInFolder(folderName:any) {
+  const listRef = ref(storage, folderName);
 
-//   return await listAll(listRef).then( async (res) => {
-//     let result = []; // tạo array trống
+  return await listAll(listRef).then( async (res) => {
+    let result = []; // tạo array trống
 
-//     for (let i in res.items) { 
-//       let url = await getDownloadURL(res.items[i])
-//       .then(url => url)
-//       .catch(er => false)
-//       if (!url) {
-//         return false
-//       }
-//       result.push(url)
-//     }
+    for (let i in res.items) { 
+      let url = await getDownloadURL(res.items[i])
+      .then(url => url)
+      .catch(er => false)
+      if (!url) {
+        return false
+      }
+      result.push(url)
+    }
 
-//     return result
-//   })
-// } 
+    return result
+  })
+} 

@@ -7,9 +7,6 @@ export class Category {
     id!: number
 
     @Column()
-    sex!: string 
-
-    @Column({ unique: true })
     name!: string 
 
     @Column({
@@ -17,7 +14,7 @@ export class Category {
     })
     block!: string 
 
-    @OneToMany(() => Product, (product) => product.category)
-    products!: Product[]
+    // @OneToMany(() => Product, (product) => product.id)
+    // products!: Product[]
 
 }

@@ -1,11 +1,11 @@
 import * as nodemailer from 'nodemailer';
 
 interface mailOptions{
-    to:string,
-    subject:string,
-    html?:string,
-    text?:string,
-    }
+to:string,
+subject:string,
+html?:string,
+text?:string,
+}
 
 export default {
     sendMail: async (mailOptions:mailOptions) => {
@@ -22,8 +22,12 @@ export default {
            let abc= await transporter.sendMail({
                 from: 'canhtest01233210@gmail.com',
                 ...mailOptions
+
+
+
+                
             });
-        console.log(abc);
+console.log(abc);
             return true
         }catch (err) {
             return false
@@ -32,7 +36,7 @@ export default {
 }
 
 // {
-//     to: "ngoccanh124937@gmail.com",
+//     to: "mieuteacher@gmail.com",
 //     subject: "Thử nghiệm send mail with node js aaaa",
 //     html: template
 // }

@@ -4,29 +4,22 @@ dotenv.config()
 
 export default {
     //gọi lúc tạo tài khoản để gửi vào email
-    createToken: function (data:any, time:number) {
-        console.log(typeof time);
-        
+    createToken: function (data:any, time:any) {
         // time(ms)
         try {
             return jwt.sign(
                 data
-                ,String(process.env.JWT_KEY)
-                );
+                ,(process.env.JWT_KEY as string)
+                , { expiresIn: `${time}` });
         } catch (err) {
-            console.log("lỗi rồi",err);
             return false
         }
     },
     //gọi lúc người dùng ấn nút xác nhận trong email
     verifyToken: function(token:any) {
-        console.log("token",token);
-        
         let result;
-        jwt.verify(token, String(process.env.JWT_KEY), function(err:any, decoded:any) {
+        jwt.verify(token, (process.env.JWT_KEY as string), function(err:any, decoded:any) {
             if(err) {
-                console.log("lỗi",err);
-                
                 result = false
             }else {
                 result = decoded
@@ -39,12 +32,9 @@ export default {
         try {
             return jwt.sign(
                 data
-                , String(process.env.JWT_KEY)
-                // , { expiresIn: `9999 years` }
-                );
+                , (process.env.JWT_KEY as string)
+                , { expiresIn: `9999 years` });
         } catch (err) {
-            console.log(err);
-            
             return false
         }
     },

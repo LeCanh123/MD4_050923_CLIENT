@@ -1,0 +1,32 @@
+datasource db {
+  provider = "mongodb"
+  url      = "mongodb+srv://1:1@cluster0.hmjl0q5.mongodb.net/Cluster0"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  username String @unique
+  email String @unique
+  confirmemail Boolean? @default(false)
+  firstname String
+  lastname String
+  password String
+  avatar String?  @default("true")
+  isActive Boolean? @default(true)
+  createat DateTime? @default(now())
+  address Address[]
+}
+
+
+type Address {
+
+  province  String
+  // user   User    @relation(fields: [id], references: [id])
+  // userid  String
+
+}
+

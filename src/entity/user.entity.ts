@@ -29,24 +29,16 @@ export class User {
     @Column({
         nullable:true
     })
-    avatar!: string
-
-    @Column({
-            nullable:true
-        })
-    createat!: Date
-
-    @Column({
-        nullable:true
-    })
     block!: string
 
     // @Column({
     //     nullable:true
     // })
     // age!: string
+
     // @OneToMany(() => Product, (product) => product.user)
     // products!: Product[]
+
     //1 user có nhiều túi
     @OneToMany(() => Bag, (bag) => bag.id)
     bags!: Bag[]
