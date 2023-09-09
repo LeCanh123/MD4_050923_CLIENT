@@ -73,6 +73,45 @@ export default {
                         message:changeQuantityResult.message}
                         )
       },
+      getCategory: async function(req:Request, res:Response) {
 
+            let categoryData= await userGetProductModel.getcategory();
+            console.log(categoryData);
+            if(categoryData.status){
+              res.status(200).json({
+                  status:true,
+                  message:categoryData.messsage,
+                  data:categoryData.data
+              }) 
+          }else{
+              res.status(201).json({
+                  status:false,
+                  message:categoryData.messsage,
+                  data:{}
+              }) 
+          }
+      },
+      getProductByCategory: async function(req:Request, res:Response) {
+      console.log(req.body);
+
+      let categoryData= await userGetProductModel.getProductByCategory(req.body.category);
+      // console.log(categoryData);
+      if(categoryData.status){
+            res.status(200).json({
+            status:true,
+            message:categoryData.message,
+            data:categoryData.data
+            }) 
+      }else{
+            res.status(201).json({
+            status:false,
+            message:categoryData.message,
+            data:[]
+            }) 
+      }
+      },
+
+
+        
 
 }

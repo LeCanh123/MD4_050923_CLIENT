@@ -298,5 +298,80 @@ import jsonWeb1 from "./../services/jwt/index"
           }
         }
     },
+    getcategory: async () => {
+      console.log("model productGetcategory");
+      
+      try {
+        const categoryRepository = connection.getRepository(Category);
+        const categorys = await categoryRepository.find({where:{block:"null"}});
+        //nếu không có category
+        if(categorys.length==0){
+          return {
+            status:false,
+            message:"Không có category",
+            data:{}
+          }
+        //nếu có category
+        }else{
+          const result:any = {};
+          for (const item of categorys) {
+            const { sex, id, name } = item;
+            if (!(sex in result)) {
+              result[sex] = [];
+            }
+            result[sex].push({ id, name });
+          }
+          console.log("result",result);
+          return {
+            status:true,
+            message:"getcategory thành công",
+            data:result
+          }
+        }
+      } catch (err:any) {
+       
+        // console.log('Error getting Category:', err);
+        return {
+          status: false,
+          messsage: "Error productGetcategory !",
+          data:{},
+      }
+      }
+    },
+    getProductByCategory: async (listCategory:any) => {
+      try {
+        const categoryRepository = connection.getRepository(Category);
+        const categorys = await categoryRepository.createQueryBuilder('category')
+        .where('category.sex = :sex', { sex: 'men' })
+        .where('category.name IN (:...names)', {names: listCategory })
+        // .leftJoinAndSelect('category.products', 'product')
+        .getMany();
+        // console.log("categoryscategoryscategorys",categorys);
+
+
+
+        const categoryIds = categorys.map(category => category.id);
+        // console.log("categorys men",categoryIds);
+        
+        const productRepository = connection.getRepository(Product);
+        const products = await productRepository.find({ where: { category: { id: In(categoryIds) } },relations: ['productimage'] });
+        // console.log("products men",products);
+
+        return {
+          status: true,
+          message: "Get Product by category success !",
+          data: products
+                }
+
+        
+      } catch (error) {
+        console.log('Error getting getProductByCategory:', error);
+        return {
+          status: false,
+          message: "Error getting getProductByCategory !",
+      }
+      }
+      
+    },
     
 }

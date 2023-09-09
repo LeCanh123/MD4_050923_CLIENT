@@ -9,6 +9,9 @@ router.post("/addtocart", userGetProductController.addToCart);
 router.post("/getcart", userGetProductController.getCart);
 router.post("/deleteproduct", userGetProductController.deleteProduct);
 router.post("/changequantity", userGetProductController.changeQuantity);
+router.post("/getcategory", userGetProductController.getCategory);
+router.post("/getproductbycategory", userGetProductController.getProductByCategory);
+
 
 
 export default router;
