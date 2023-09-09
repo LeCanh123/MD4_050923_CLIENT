@@ -21,9 +21,18 @@ export default {
 
 
             
-            let addToCartResult= await userGetProductModel.addToCart(req.body)
+            let addToCartResult= await userGetProductModel.addToCart(req.body);
             console.log(addToCartResult);
-            // res.status(addToCartResult.status ? 200 : 413).json(addToCartResult)
+            if(addToCartResult.status){
+                  return res.status(200).json({
+                        status:true,
+                        message:addToCartResult.message}
+                        )
+            }
+                  return res.status(201).json({
+                        status:false,
+                        message:addToCartResult.message}
+                        )
             },
       getCart: async function(req:Request, res:Response) {
             console.log("vào get cart");

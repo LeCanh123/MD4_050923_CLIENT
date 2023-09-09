@@ -29,7 +29,7 @@ import jsonWeb1 from "./../services/jwt/index"
  
           return {
             status: true,
-            messsage: "Get MenProduct success !",
+            message: "Get MenProduct success !",
             data: products
         }
 
@@ -38,7 +38,7 @@ import jsonWeb1 from "./../services/jwt/index"
           console.log('Error getting MenProduct:', error);
           return {
             status: false,
-            messsage: "Error getting MenProduct !",
+            message: "Error getting MenProduct !",
         }
         }
     },
@@ -62,7 +62,10 @@ import jsonWeb1 from "./../services/jwt/index"
             let createUserBag=await userBag.save({block:"null",user:findUserChangeInfo[0]?.id!});
             //thêm hàng vào giỏ vừa tạo
             let addUserCart=await userCart.save({block:"null",bag:createUserBag?.id!,quantity:1,products:data.id});
-            
+            return {
+              status: true,
+              message: "Thêm sản phẩm thành công",
+            }
           //nếu thấy giỏ hàng
           }else{
           console.log("đã có giỏ hàng");
@@ -75,7 +78,7 @@ import jsonWeb1 from "./../services/jwt/index"
                   let addUserCart=await userCart.save({block:"null",bag:findUserBag[0].id!,quantity:1,products:data.id});
                   return {
                     status: true,
-                    messsage: "Add Product success !",
+                    message: "Add Product success !",
                     // data: null
                         }
               }
@@ -91,17 +94,21 @@ import jsonWeb1 from "./../services/jwt/index"
                   
                   return {
                     status: true,
-                    messsage: "Add Product success !",
+                    message: "Add Product success !",
                     // data: null
                         }
               }
           }
         }
+        return {
+          status: false,
+          message: "Chưa đăng nhập",
+        }
       }
       catch(err){
         return {
           status: false,
-          messsage: "Add Product thất bại !",
+          message: "Add Product thất bại !",
           // data: null
               }
       }
@@ -290,6 +297,6 @@ import jsonWeb1 from "./../services/jwt/index"
             message:"Lỗi hệ thống",
           }
         }
-        },
+    },
     
 }
