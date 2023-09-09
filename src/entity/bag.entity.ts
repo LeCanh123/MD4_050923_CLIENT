@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne,OneToMany } from "typeorm"
 import { User } from "./user.entity" 
 import { Cart } from "./cart.entity"
+import { Address } from "./address.entity"
 @Entity()
 export class Bag {
     @PrimaryGeneratedColumn()
@@ -21,5 +22,9 @@ export class Bag {
     // 1 túi nhiều cart
     @OneToMany(() => Cart, (cart) => cart.bag)
     carts!: Cart[]
+
+    // 1 túi nhiều address
+    @OneToMany(() => Address, (address) => address.bag)
+    address!: Address[]
 
 }

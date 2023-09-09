@@ -5,7 +5,7 @@ import { Bag } from '../entity/bag.entity';
 import { Cart } from '../entity/cart.entity'; 
 import { Category } from '../entity/category.entity';
 import { ProductImage } from './productimage.entity';
-
+import { Address } from './address.entity';
 
 export let connection: Connection;
 (async () => {
@@ -17,7 +17,7 @@ export let connection: Connection;
         username: 'root',
         password: '',
         database: 'md4_db',
-        entities: [User,Product,ProductImage,Bag,Cart,Category],
+        entities: [User,Product,ProductImage,Bag,Cart,Category,Address],
         synchronize: true,
       });
     } catch (error) {

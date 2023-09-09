@@ -27,6 +27,10 @@ router.use("/userproduct", userProduct);
 import adminProduct from "./adminProduct.v1"
 router.use("/adminproduct", adminProduct);
 
+//purchase
+import Purchase1 from "./purchase.v1"
+router.use("/purchase", Purchase1);
+
 
 //middleware
 router.post("/userchecktoken", userMiddlewave.confirmTokenLogin);

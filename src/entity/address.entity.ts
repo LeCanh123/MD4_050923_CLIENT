@@ -4,16 +4,29 @@ import { Bag } from "./bag.entity"
 @Entity()
 export class Address {
     @PrimaryGeneratedColumn()
-    id!: null
+    id!: number
 
-    @Column({ unique: true })
-    housenumber!: string 
+    @Column()
+    name!: string 
 
-    @Column({ unique: true })
-    district!: string 
+    @Column()
+    building!: string 
 
 
-    @ManyToOne(() => Bag, (bag) => bag.id)
-    bags!: Bag[]
+    @Column()
+    city!: string 
+
+    @Column()
+    mobile!: string 
+
+    @Column()
+    pin!: string 
+
+    @Column()
+    state!: string 
+
+    //nhiều address 1 bag
+    @ManyToOne(() => Bag, (bag) => bag.address)
+    bag!: Bag
 
 }
