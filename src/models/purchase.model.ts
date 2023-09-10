@@ -21,7 +21,6 @@ import jsonWeb1 from "./../services/jwt/index"
       //giải mã token
       try{
         let unpack:any= jsonWeb1.verifyToken(data.token);
-        console.log(unpack);
         if(unpack){
           const userCart = connection.getRepository(Cart);
           //tìm thông tin user
@@ -77,7 +76,6 @@ import jsonWeb1 from "./../services/jwt/index"
         //giải mã token
         try{
           let unpack:any= jsonWeb1.verifyToken(data.token);
-          console.log(unpack);
           if(unpack){
             const userCart = connection.getRepository(Cart);
             //tìm thông tin user
@@ -86,7 +84,7 @@ import jsonWeb1 from "./../services/jwt/index"
   
             //tìm giỏ hàng
             const userBag = connection.getRepository(Bag);
-            let findUserBag:any=await userBag.find({where:{user:unpack.id,block:"true"},relations: ['carts']});
+            let findUserBag:any=await userBag.find({where:{user:unpack.id,block:"true"},relations: ['carts','carts.products','carts.products.productimage']});
             //nếu không thấy giỏ hàng
             if(findUserBag.length==0){
               //trả về lỗi
@@ -96,8 +94,6 @@ import jsonWeb1 from "./../services/jwt/index"
                 }
             //nếu thấy giỏ hàng
             }else{
-            console.log("findUserBag,findUserBag",findUserBag);
-
               return {
                   status: true,
                   data:findUserBag,

@@ -15,7 +15,6 @@ export default {
 
       addOrder: async function(req:Request, res:Response) {            
             let addOrder= await purchaseModel.addOrder(req.body);
-            console.log(addOrder);
             if(addOrder.status){
                   return res.status(200).json({
                         status:true,

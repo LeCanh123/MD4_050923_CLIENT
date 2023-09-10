@@ -14,7 +14,6 @@ const saltRounds = 10;
 export default {
       getMenProduct: async function(req:Request, res:Response) {
             let userdata= await userGetProductModel.getMenProduct()
-            console.log(userdata);
             res.status(userdata.status ? 200 : 413).json(userdata)
             },
       addToCart: async function(req:Request, res:Response) {
@@ -22,7 +21,6 @@ export default {
 
             
             let addToCartResult= await userGetProductModel.addToCart(req.body);
-            console.log(addToCartResult);
             if(addToCartResult.status){
                   return res.status(200).json({
                         status:true,
@@ -35,17 +33,11 @@ export default {
                         )
             },
       getCart: async function(req:Request, res:Response) {
-            console.log("vào get cart");
-            
             let cartData= await userGetProductModel.getCart(req.body.token)
-            console.log(cartData);
             res.status(200).json(cartData)
             },
       deleteProduct: async function(req:Request, res:Response) {
-                  console.log("vào get cart");
-                  
                   let deleteProductResult= await userGetProductModel.deleteProduct(req.body)
-                  console.log(deleteProductResult);
                   if(deleteProductResult.status){
                         return res.status(200).json({
                               status:true,
@@ -58,10 +50,7 @@ export default {
                               )
             },
       changeQuantity: async function(req:Request, res:Response) {
-            console.log("vào changeQuantity");
-                  
             let changeQuantityResult= await userGetProductModel.changeQuantity(req.body)
-            console.log(changeQuantityResult);
             if(changeQuantityResult.status){
                   return res.status(200).json({
                         status:true,
@@ -76,7 +65,6 @@ export default {
       getCategory: async function(req:Request, res:Response) {
 
             let categoryData= await userGetProductModel.getcategory();
-            console.log(categoryData);
             if(categoryData.status){
               res.status(200).json({
                   status:true,
@@ -92,10 +80,7 @@ export default {
           }
       },
       getProductByCategory: async function(req:Request, res:Response) {
-      console.log(req.body);
-
       let categoryData= await userGetProductModel.getProductByCategory(req.body.category);
-      // console.log(categoryData);
       if(categoryData.status){
             res.status(200).json({
             status:true,

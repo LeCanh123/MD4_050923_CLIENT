@@ -19,7 +19,6 @@ import { connection } from '../entity/connectionDatabase';
     //category
     addCategory: async (data:any) => {
         try {
-          console.log(data);
           let categoryData={
             name:data.name,
             sex:data.sex,
@@ -36,7 +35,6 @@ import { connection } from '../entity/connectionDatabase';
 
           
         } catch (err:any) {
-          console.log('Error Add Category:', err);
           if (err.toString().includes("Duplicate") ) {
             return {
               status: false,
@@ -53,7 +51,6 @@ import { connection } from '../entity/connectionDatabase';
       try {
         const categoryRepository = connection.getRepository(Category);
         const categorys = await categoryRepository.find({where:{block:"null"}});
-        console.log("categorys",categorys);
         
         return {
           status: true,
@@ -64,7 +61,6 @@ import { connection } from '../entity/connectionDatabase';
         
       } catch (err:any) {
        
-        // console.log('Error getting Category:', err);
         return {
           status: false,
           messsage: "Error getting Category !",
@@ -72,12 +68,10 @@ import { connection } from '../entity/connectionDatabase';
       }
     },
     deleteCategory: async (data:any) => {
-      console.log("data deleteCategory",data);
       
       try {
         const categoryRepository = connection.getRepository(Category);
         let findCategory=await categoryRepository.find({where:{id:data.id}});
-        console.log("findCategory",findCategory);
         if(findCategory.length==0){
           let findCategory1=await categoryRepository.find({where:{block:"null"}});
           if(findCategory1.length==0){
@@ -115,7 +109,6 @@ import { connection } from '../entity/connectionDatabase';
         
       } catch (err:any) {
        
-        // console.log('Error getting Category:', err);
         return {
           status: false,
           messsage: "Error delete Category !",
@@ -125,7 +118,6 @@ import { connection } from '../entity/connectionDatabase';
     },
     //product
     addProduct: async (data:any) => {
-      console.log("Modeldata",data);
       
       
       try {
@@ -140,7 +132,6 @@ import { connection } from '../entity/connectionDatabase';
 
         let productRepository = connection.getRepository(Product);
         const categorys=await productRepository.save(data1);
-        console.log("categorys 22345",categorys);
 
 
         let data2:any={
@@ -161,7 +152,6 @@ import { connection } from '../entity/connectionDatabase';
 
         
       } catch (error) {
-        console.log('Error Add Product:', error);
         return  {
           status: false,
           messsage: "Error Add Product !",
@@ -185,7 +175,6 @@ import { connection } from '../entity/connectionDatabase';
 
         
       } catch (error) {
-        console.log('Error Add Category:', error);
         return {
           status: false,
           messsage: "Error Add Category !",
@@ -209,7 +198,6 @@ import { connection } from '../entity/connectionDatabase';
 
         
       } catch (error) {
-        console.log('Error Add Category:', error);
         return {
           status: false,
           messsage: "Error Add Category !",
@@ -217,7 +205,6 @@ import { connection } from '../entity/connectionDatabase';
       }
     },
     productGetcategory: async () => {
-      console.log("model productGetcategory");
       
       try {
         const categoryRepository = connection.getRepository(Category);
@@ -239,7 +226,6 @@ import { connection } from '../entity/connectionDatabase';
             }
             result[sex].push({ id, name });
           }
-          console.log("result",result);
           return {
             status:true,
             message:"productGetcategory thành công",
@@ -248,7 +234,6 @@ import { connection } from '../entity/connectionDatabase';
         }
       } catch (err:any) {
        
-        // console.log('Error getting Category:', err);
         return {
           status: false,
           messsage: "Error productGetcategory !",
@@ -259,12 +244,10 @@ import { connection } from '../entity/connectionDatabase';
 
     //test
     test: async () => {
-      console.log("model productGetcategory");
       
       try {
         const getProductRepository = connection.getRepository(Product);
         const products = await getProductRepository.find({ relations: ['productimage'] });
-        console.log("products tesst ",products);
         return products
         
         //nếu không có category
@@ -273,7 +256,6 @@ import { connection } from '../entity/connectionDatabase';
 
       } catch (err:any) {
        
-        // console.log('Error getting Category:', err);
         return {
           status: false,
           messsage: "Error productGetcategory !",

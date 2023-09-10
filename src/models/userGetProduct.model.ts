@@ -21,12 +21,8 @@ import jsonWeb1 from "./../services/jwt/index"
           const categoryRepository = connection.getRepository(Category);
           const categorys = await categoryRepository.find({where:{sex:"men"}});
           const categoryIds = categorys.map(category => category.id);
-          console.log("categorys men",categorys);
-          
           const productRepository = connection.getRepository(Product);
           const products = await productRepository.find({ where: { category: { id: In(categoryIds) } },relations: ['productimage'] });
-          console.log("products men",products);
- 
           return {
             status: true,
             message: "Get MenProduct success !",
@@ -35,7 +31,6 @@ import jsonWeb1 from "./../services/jwt/index"
 
           
         } catch (error) {
-          console.log('Error getting MenProduct:', error);
           return {
             status: false,
             message: "Error getting MenProduct !",
@@ -46,7 +41,6 @@ import jsonWeb1 from "./../services/jwt/index"
       //giải mã token
       try{
         let unpack:any= jsonWeb1.verifyToken(data.token);
-        console.log(unpack);
         if(unpack){
           const userCart = connection.getRepository(Cart);
           //tìm thông tin user
@@ -68,8 +62,6 @@ import jsonWeb1 from "./../services/jwt/index"
             }
           //nếu thấy giỏ hàng
           }else{
-          console.log("đã có giỏ hàng");
-          console.log("userBag.length",findUserBag);
           //tìm sản phẩm trong giỏ hàng
           let findUserCart=await userCart.find({where:{block:"null",bag:findUserBag[0].id!,products:{id:data.id}}});
               //nếu sản phẩm chưa có trong giỏ hàng
@@ -117,7 +109,6 @@ import jsonWeb1 from "./../services/jwt/index"
     //giải mã token
       try{
         let unpack:any= jsonWeb1.verifyToken(token);
-        console.log(unpack);
         if(unpack){
           //lấy sản phẩm trong giỏ
           //tìm giỏ hàng
@@ -135,13 +126,12 @@ import jsonWeb1 from "./../services/jwt/index"
             else{
               //tìm sản phẩm trong giỏ
               const userCartRepository = connection.getRepository(Cart);
-              let findUserCart=await userCartRepository.find({where:{bag:{id:findUserBag[0].id,}},
+              let findUserCart=await userCartRepository.find({where:{bag:{id:findUserBag[0].id}},
                                                               relations: ['products','products.productimage']
                                                           });
-              console.log("sản phẩm trong giỏ",findUserCart);
               return {
-                status:false,
-                message:"Lấy giỏ hàng không thành công",
+                status:true,
+                message:"Lấy giỏ hàng thành công",
                 data:findUserCart
               }       
 
@@ -173,12 +163,9 @@ import jsonWeb1 from "./../services/jwt/index"
       }
     },
     deleteProduct: async (data:any) => {
-      console.log("data",data);
-      
       //giải mã token
         try{
           let unpack:any= jsonWeb1.verifyToken(data.token);
-          console.log(unpack);
           if(unpack){
             //lấy sản phẩm trong giỏ
             //tìm giỏ hàng
@@ -207,7 +194,6 @@ import jsonWeb1 from "./../services/jwt/index"
                     }
                  }                                               
                  //nếu tìm thấy sản phẩm trong giỏ
-                  console.log("sản phẩm trong giỏ",findProductInCart);
                   //xoá sản phẩm trong giỏ
                   let deleteProduct= await userCartRepository
                   .createQueryBuilder('users')
@@ -237,12 +223,10 @@ import jsonWeb1 from "./../services/jwt/index"
         }
     },
     changeQuantity: async (data:any) => {
-      console.log("data",data);
       
       //giải mã token
         try{
           let unpack:any= jsonWeb1.verifyToken(data.token);
-          console.log(unpack);
           if(unpack){
             //lấy sản phẩm trong giỏ
             //tìm giỏ hàng
@@ -269,7 +253,6 @@ import jsonWeb1 from "./../services/jwt/index"
                     }
                  }                                               
                  //nếu tìm thấy sản phẩm trong giỏ
-                  console.log("sản phẩm trong giỏ",findProductInCart);
                   //xoá sản phẩm trong giỏ
                   let changeQuantity= await userCartRepository
                     .createQueryBuilder()
@@ -299,8 +282,6 @@ import jsonWeb1 from "./../services/jwt/index"
         }
     },
     getcategory: async () => {
-      console.log("model productGetcategory");
-      
       try {
         const categoryRepository = connection.getRepository(Category);
         const categorys = await categoryRepository.find({where:{block:"null"}});
@@ -321,7 +302,6 @@ import jsonWeb1 from "./../services/jwt/index"
             }
             result[sex].push({ id, name });
           }
-          console.log("result",result);
           return {
             status:true,
             message:"getcategory thành công",
@@ -329,8 +309,6 @@ import jsonWeb1 from "./../services/jwt/index"
           }
         }
       } catch (err:any) {
-       
-        // console.log('Error getting Category:', err);
         return {
           status: false,
           messsage: "Error productGetcategory !",
@@ -346,16 +324,13 @@ import jsonWeb1 from "./../services/jwt/index"
         .where('category.name IN (:...names)', {names: listCategory })
         // .leftJoinAndSelect('category.products', 'product')
         .getMany();
-        // console.log("categoryscategoryscategorys",categorys);
 
 
 
         const categoryIds = categorys.map(category => category.id);
-        // console.log("categorys men",categoryIds);
         
         const productRepository = connection.getRepository(Product);
         const products = await productRepository.find({ where: { category: { id: In(categoryIds) } },relations: ['productimage'] });
-        // console.log("products men",products);
 
         return {
           status: true,
@@ -365,7 +340,6 @@ import jsonWeb1 from "./../services/jwt/index"
 
         
       } catch (error) {
-        console.log('Error getting getProductByCategory:', error);
         return {
           status: false,
           message: "Error getting getProductByCategory !",
