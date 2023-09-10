@@ -142,21 +142,57 @@ catch(err){
 }  
     
     },
+    getProduct: async function(req:Request, res:Response) {
+        //
+        let getProductResult= await adminProductModel.getProduct(req.body)
+        if(getProductResult.status){
+            return res.status(200).json({
+                status:true,
+                message:getProductResult.message,
+                data:getProductResult.data
+            }) 
+        }else{
+            return res.status(201).json({
+                status:false,
+                message:getProductResult.message,
+                data:[]
+            }) 
+        }
+    },
     editProduct: async function(req:Request, res:Response) {
         //
-        let addCategoryResult= await adminProductModel.addCategory(req.body.category)
-    
-    
-            console.log(addCategoryResult);
-            res.status(addCategoryResult.status ? 200 : 413).json(addCategoryResult)
+        let editProductResult= await adminProductModel.editProduct(req.body)
+        if(editProductResult.status){
+            return res.status(200).json({
+                status:true,
+                message:editProductResult.message,
+                data:"null"
+            }) 
+        }else{
+            return res.status(201).json({
+                status:false,
+                message:editProductResult.message,
+                data:"null"
+            }) 
+        }
     },
     deleteProduct: async function(req:Request, res:Response) {
         //
-        let addCategoryResult= await adminProductModel.addCategory(req.body.category)
-    
-    
-            console.log(addCategoryResult);
-            res.status(addCategoryResult.status ? 200 : 413).json(addCategoryResult)
+        let deleteProductResult= await adminProductModel.deleteProduct(req.body)
+
+            if(deleteProductResult.status){
+                return res.status(200).json({
+                    status:true,
+                    message:deleteProductResult.message,
+                    data:"null"
+                }) 
+            }else{
+                return res.status(201).json({
+                    status:false,
+                    message:deleteProductResult.message,
+                    data:"null"
+                }) 
+            }
     },
     productGetCategory: async function(req:Request, res:Response) {
 

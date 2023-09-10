@@ -10,7 +10,10 @@ import { ProductImage } from '../entity/productimage.entity';
 
 //kết nối connection database
 import { connection } from '../entity/connectionDatabase';
+import { In } from 'typeorm';
 
+//jwt
+import jsonWeb1 from "./../services/jwt/index"
 
 
 
@@ -158,6 +161,33 @@ import { connection } from '../entity/connectionDatabase';
                 }
       }
     },
+    getProduct: async (data:any) => {
+      // console.log("data",data);
+      
+      try {
+        const categoryRepository = connection.getRepository(Category);
+        const categorys=await categoryRepository.find({where:{sex:data.data?.type,block:"null"}});
+        const categoryIds = categorys.map(category => category.id);
+
+        const productRepository = connection.getRepository(Product);
+        const products = await productRepository.find({ where: { category: { id: In(categoryIds) } },relations: ['productimage'] });
+        console.log(products);
+       
+
+        return {
+          status: true,
+          message: "Get Product success !",
+          data: products
+      }
+
+        
+      } catch (error) {
+        return {
+          status: false,
+          message: "Error Get Product !",
+      }
+      }
+    },
     editProduct: async (data:any) => {
       try {
         const categoryRepository = connection.getRepository(Category);
@@ -169,7 +199,7 @@ import { connection } from '../entity/connectionDatabase';
 
         return {
           status: true,
-          messsage: "Add Category success !",
+          message: "Add Category success !",
           // data: users
       }
 
@@ -177,31 +207,39 @@ import { connection } from '../entity/connectionDatabase';
       } catch (error) {
         return {
           status: false,
-          messsage: "Error Add Category !",
+          message: "Error Add Category !",
       }
       }
     },
     deleteProduct: async (data:any) => {
-      try {
-        const categoryRepository = connection.getRepository(Category);
-        const categorys=await categoryRepository.save(data);
+      //giải mã token
+      try{
+        let unpack:any= jsonWeb1.verifyToken(data.token);
+        if(unpack){
+          const productRepository = connection.getRepository(Product);
+          let deleteProductResult=await productRepository
+                                      .createQueryBuilder()
+                                      .update(Product)
+                                      .set({ block: "true"})
+                                      .where("id = :id", { id: data.id })
+                                      .execute()
+          return {
+            status: true,
+            message: "Xoá sản phẩm thành công",
+          }
 
-        // const users = await userRepository.find({
-        //   select: {email: true,password:true},
-        // });
-
-        return {
-          status: true,
-          messsage: "Add Category success !",
-          // data: users
-              }
-
-        
-      } catch (error) {
+        }
         return {
           status: false,
-          messsage: "Error Add Category !",
+          message: "Chưa đăng nhập",
+        }
       }
+      catch(err){
+        return {
+          status: false,
+          message: "Delete product thất bại !",
+          // data: null
+              }
       }
     },
     productGetcategory: async () => {
@@ -241,6 +279,7 @@ import { connection } from '../entity/connectionDatabase';
       }
       }
     },
+
 
     //test
     test: async () => {

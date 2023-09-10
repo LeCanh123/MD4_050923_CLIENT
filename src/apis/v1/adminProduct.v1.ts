@@ -22,10 +22,16 @@ const imgProductStorage = multer.diskStorage({
     }
   })
   const productUpload = multer({ storage: imgProductStorage })
+//product
 router.post('/addproduct',
 productUpload.fields([{ name: 'image', maxCount: 1 }, { name: 'img1', maxCount: 1 },
 { name: 'img2', maxCount: 1 },{ name: 'img3', maxCount: 1 },{ name: 'img4', maxCount: 1 },
 ]),
-adminProductController.addProduct)
+adminProductController.addProduct);
+router.post("/getproduct", adminProductController.getProduct);
+router.post("/deleteproduct", adminProductController.deleteProduct);
+router.post("/editproduct", adminProductController.editProduct);
+
+
 
 export default router;
