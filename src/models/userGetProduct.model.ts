@@ -49,13 +49,13 @@ import jsonWeb1 from "./../services/jwt/index"
           //thêm sản phẩm vào giỏ hàng
           //tìm giỏ hàng
           const userBag = connection.getRepository(Bag);
-          let findUserBag:any=await userBag.find({where:{user:unpack.id,block:"null"}});
+          let findUserBag:any=await userBag.find({where:{user:{id:unpack.id},block:"null"}});
           //nếu không thấy giỏ hàng
           //tạo giỏ hàng
           if(findUserBag.length==0){
-            let createUserBag=await userBag.save({block:"null",user:findUserChangeInfo[0]?.id!});
+            let createUserBag=await userBag.save({block:"null",user:{id:findUserChangeInfo[0]?.id!}});
             //thêm hàng vào giỏ vừa tạo
-            let addUserCart=await userCart.save({block:"null",bag:createUserBag?.id!,quantity:1,products:data.id});
+            let addUserCart=await userCart.save({block:"null",bag:{id:createUserBag?.id!},quantity:1,products:data.id});
             return {
               status: true,
               message: "Thêm sản phẩm thành công",
@@ -63,11 +63,11 @@ import jsonWeb1 from "./../services/jwt/index"
           //nếu thấy giỏ hàng
           }else{
           //tìm sản phẩm trong giỏ hàng
-          let findUserCart=await userCart.find({where:{block:"null",bag:findUserBag[0].id!,products:{id:data.id}}});
+          let findUserCart=await userCart.find({where:{block:"null",bag:{id:findUserBag[0].id!},products:{id:data.id}}});
               //nếu sản phẩm chưa có trong giỏ hàng
               if(findUserCart.length==0){
                   //thêm hàng vào giỏ vừa tìm
-                  let addUserCart=await userCart.save({block:"null",bag:findUserBag[0].id!,quantity:1,products:data.id});
+                  let addUserCart=await userCart.save({block:"null",bag:{id:findUserBag[0].id!},quantity:1,products:data.id});
                   return {
                     status: true,
                     message: "Add Product success !",
@@ -113,7 +113,7 @@ import jsonWeb1 from "./../services/jwt/index"
           //lấy sản phẩm trong giỏ
           //tìm giỏ hàng
           const userBag = connection.getRepository(Bag);
-          let findUserBag:any=await userBag.find({where:{user:unpack.id,block:"null"}});
+          let findUserBag:any=await userBag.find({where:{user:{id:unpack.id},block:"null"}});
             //nếu không tìm thấy giỏ
             if(findUserBag.length==0){
               return {

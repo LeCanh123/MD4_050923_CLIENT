@@ -131,6 +131,7 @@ import jsonWeb1 from "./../services/jwt/index"
           price:data.price,
           actualprice:data.actualprice,
           category:data.categoryId,
+          block:"null"
         }
 
         let productRepository = connection.getRepository(Product);
@@ -170,7 +171,7 @@ import jsonWeb1 from "./../services/jwt/index"
         const categoryIds = categorys.map(category => category.id);
 
         const productRepository = connection.getRepository(Product);
-        const products = await productRepository.find({ where: { category: { id: In(categoryIds) } },relations: ['productimage'] });
+        const products = await productRepository.find({ where: { category: { id: In(categoryIds) },block:"null" },relations: ['productimage'] });
         console.log(products);
        
 
@@ -212,6 +213,8 @@ import jsonWeb1 from "./../services/jwt/index"
       }
     },
     deleteProduct: async (data:any) => {
+      console.log("deleteProduct",data);
+      
       //giải mã token
       try{
         let unpack:any= jsonWeb1.verifyToken(data.token);

@@ -29,7 +29,7 @@ import jsonWeb1 from "./../services/jwt/index"
 
           //tìm giỏ hàng
           const userBag = connection.getRepository(Bag);
-          let findUserBag:any=await userBag.find({where:{user:unpack.id,block:"null"}});
+          let findUserBag:any=await userBag.find({where:{user:{id:unpack.id},block:"null"}});
           //nếu không thấy giỏ hàng
           if(findUserBag.length==0){
             //trả về lỗi
@@ -41,7 +41,7 @@ import jsonWeb1 from "./../services/jwt/index"
           }else{
             //thêm địa chỉ vào giỏ hàng
             const userAddress = connection.getRepository(Address);
-            let addOrderResult=await userAddress.save({...data.data,bag:findUserBag[0].id});
+            let addOrderResult=await userAddress.save({...data.data,bag:{id:findUserBag[0].id}});
 
             //block giỏ hàng
             // let blockUserBag=userBag;
@@ -84,7 +84,7 @@ import jsonWeb1 from "./../services/jwt/index"
   
             //tìm giỏ hàng
             const userBag = connection.getRepository(Bag);
-            let findUserBag:any=await userBag.find({where:{user:unpack.id,block:"true"},relations: ['carts','carts.products','carts.products.productimage']});
+            let findUserBag:any=await userBag.find({where:{user:{id:unpack.id},block:"true"},relations: ['carts','carts.products','carts.products.productimage']});
             //nếu không thấy giỏ hàng
             if(findUserBag.length==0){
               //trả về lỗi
