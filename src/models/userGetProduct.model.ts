@@ -321,6 +321,7 @@ import jsonWeb1 from "./../services/jwt/index"
         const categoryRepository = connection.getRepository(Category);
         const categorys = await categoryRepository.createQueryBuilder('category')
         .where('category.sex = :sex', { sex: 'men' })
+        .where('category.block = :block', { block: 'null' })
         .where('category.name IN (:...names)', {names: listCategory })
         // .leftJoinAndSelect('category.products', 'product')
         .getMany();
@@ -330,7 +331,7 @@ import jsonWeb1 from "./../services/jwt/index"
         const categoryIds = categorys.map(category => category.id);
         
         const productRepository = connection.getRepository(Product);
-        const products = await productRepository.find({ where: { category: { id: In(categoryIds) } },relations: ['productimage'] });
+        const products = await productRepository.find({ where: { category: { id: In(categoryIds) },block:"null" },relations: ['productimage'] });
 
         return {
           status: true,
