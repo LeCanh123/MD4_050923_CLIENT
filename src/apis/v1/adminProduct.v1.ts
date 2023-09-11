@@ -1,13 +1,13 @@
 import express  from "express";
 import adminProductController from "../../controllers/adminProduct.controller";
 import multer from "multer";
-
+import adminMiddlewave from "../../middlewave/admin.middlewave";
 
 const router = express.Router();
-router.post("/addcategory", adminProductController.addCategory);
-router.post("/getcategory", adminProductController.getCategory);
-router.post("/deletecategory", adminProductController.deleteCategory);
-router.post("/productgetcategory", adminProductController.productGetCategory);
+router.post("/addcategory",adminMiddlewave.confirmAdmin, adminProductController.addCategory);
+router.post("/getcategory",adminMiddlewave.confirmAdmin, adminProductController.getCategory);
+router.post("/deletecategory",adminMiddlewave.confirmAdmin, adminProductController.deleteCategory);
+router.post("/productgetcategory",adminMiddlewave.confirmAdmin, adminProductController.productGetCategory);
 router.post("/test", adminProductController.test);
 
 
@@ -28,9 +28,12 @@ productUpload.fields([{ name: 'image', maxCount: 1 }, { name: 'img1', maxCount: 
 { name: 'img2', maxCount: 1 },{ name: 'img3', maxCount: 1 },{ name: 'img4', maxCount: 1 },
 ]),
 adminProductController.addProduct);
-router.post("/getproduct", adminProductController.getProduct);
-router.post("/deleteproduct", adminProductController.deleteProduct);
-router.post("/editproduct", adminProductController.editProduct);
+router.post("/getproduct",adminMiddlewave.confirmAdmin, adminProductController.getProduct);
+router.post("/deleteproduct",adminMiddlewave.confirmAdmin, adminProductController.deleteProduct);
+router.post("/editproduct",adminMiddlewave.confirmAdmin, adminProductController.editProduct);
+router.post("/adminchecklogin",adminMiddlewave.confirmAdmin,adminProductController.adminCheckLogin);
+
+
 
 
 

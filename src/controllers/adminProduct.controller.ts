@@ -31,21 +31,18 @@ export default {
                     data:"null"
                 }) 
             }
-
-        console.log(addCategoryResult);
-        res.status(addCategoryResult.status ? 200 : 413).json(addCategoryResult)
     },
     getCategory: async function(req:Request, res:Response) {
           let categoryData= await adminProductModel.getCategory()
           console.log(categoryData);
-          if(categoryData.status){
-            res.status(200).json({
+        if(categoryData.status){
+            return res.status(200).json({
                 status:true,
                 message:categoryData.messsage,
                 data:categoryData.data
             }) 
         }else{
-            res.status(201).json({
+            return res.status(201).json({
                 status:false,
                 message:categoryData.messsage,
                 data:"null"
@@ -58,13 +55,13 @@ export default {
         let categoryData= await adminProductModel.deleteCategory(req.body)
         console.log(categoryData);
         if(categoryData.status){
-          res.status(200).json({
+          return res.status(200).json({
               status:true,
               message:categoryData.messsage,
             //   data:categoryData.data
           }) 
       }else{
-          res.status(201).json({
+          return res.status(201).json({
               status:false,
               message:categoryData.messsage,
               data:"null"
@@ -144,7 +141,7 @@ catch(err){
     },
     getProduct: async function(req:Request, res:Response) {
         //
-        let getProductResult= await adminProductModel.getProduct(req.body)
+        let getProductResult= await adminProductModel.getProduct(req.body);
         if(getProductResult.status){
             return res.status(200).json({
                 status:true,
@@ -199,18 +196,27 @@ catch(err){
         let categoryData= await adminProductModel.productGetcategory();
         console.log(categoryData);
         if(categoryData.status){
-          res.status(200).json({
+          return res.status(200).json({
               status:true,
               message:categoryData.messsage,
               data:categoryData.data
           }) 
       }else{
-          res.status(201).json({
+          return res.status(201).json({
               status:false,
               message:categoryData.messsage,
               data:{}
           }) 
       }
+    },
+
+
+    //checkLogin
+    adminCheckLogin: async function(req:Request, res:Response) {
+          return res.status(200).json({
+              status:true,
+              message:"Bạn Là admin",
+          }) 
     },
 
     //test

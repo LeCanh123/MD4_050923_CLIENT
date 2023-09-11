@@ -27,6 +27,11 @@ router.use("/userproduct", userProduct);
 import adminProduct from "./adminProduct.v1"
 router.use("/adminproduct", adminProduct);
 
+//admin manage User
+import adminUser from "./adminUser.v1"
+router.use("/adminuser", adminUser);
+
+
 //purchase
 import Purchase1 from "./purchase.v1"
 router.use("/purchase", Purchase1);
