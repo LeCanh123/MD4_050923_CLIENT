@@ -32,5 +32,24 @@ export default {
                 }) 
             }
     },
+    getListUserCart: async function(req:Request, res:Response) {
+        console.log(req.body.category);
+        
+    //
+    let getListUserCartResult= await adminUserModel.getListUserCart(req.body.category)
+            if(getListUserCartResult.status){
+                return res.status(200).json({
+                    status:true,
+                    message:getListUserCartResult.message,
+                    data:getListUserCartResult.data
+                }) 
+            }else{
+                return res.status(201).json({
+                    status:false,
+                    message:getListUserCartResult.message,
+                    data:[]
+                }) 
+            }
+    },
 
 }

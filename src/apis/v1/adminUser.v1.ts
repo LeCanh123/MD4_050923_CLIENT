@@ -5,6 +5,8 @@ import adminMiddlewave from "../../middlewave/admin.middlewave";
 
 const router = express.Router();
 router.post("/getlistuser",adminMiddlewave.confirmAdmin, adminUserController.getListUser);
+router.post("/getlistusercart",adminMiddlewave.confirmAdmin, adminUserController.getListUserCart);
+// router.post("/getlistusercart", adminUserController.getListUserCart);
 
 
 

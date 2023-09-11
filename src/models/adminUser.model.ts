@@ -37,6 +37,22 @@ import jsonWeb1 from "../services/jwt/index"
           }
         }
     },
-
+    getListUserCart: async (data:any) => {
+      try {
+        const userRepository = connection.getRepository(Bag);
+        let findUserCart=await userRepository.find({ relations: ['user',"carts","address","carts.products","carts.products.productimage"] });
+        return {
+          status:true,
+          message:"Lấy danh sách cart user thành công",
+          data:findUserCart
+        }
+      } catch (err:any) {
+        return {
+          status:true,
+          message:"Lấy danh sách user cart thất bại",
+          data:[]
+        }
+      }
+    },
 
 }

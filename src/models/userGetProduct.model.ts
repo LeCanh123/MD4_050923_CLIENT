@@ -19,10 +19,10 @@ import jsonWeb1 from "./../services/jwt/index"
     getMenProduct: async () => {
         try {
           const categoryRepository = connection.getRepository(Category);
-          const categorys = await categoryRepository.find({where:{sex:"men"}});
+          const categorys = await categoryRepository.find({where:{sex:"men",block:"null"}});
           const categoryIds = categorys.map(category => category.id);
           const productRepository = connection.getRepository(Product);
-          const products = await productRepository.find({ where: { category: { id: In(categoryIds) } },relations: ['productimage'] });
+          const products = await productRepository.find({ where: {block:"null", category: { id: In(categoryIds),block:"null" } },relations: ['productimage'] });
           return {
             status: true,
             message: "Get MenProduct success !",
@@ -231,7 +231,7 @@ import jsonWeb1 from "./../services/jwt/index"
             //lấy sản phẩm trong giỏ
             //tìm giỏ hàng
             const userBag = connection.getRepository(Bag);
-            let findUserBag:any=await userBag.find({where:{user:unpack.id,block:"null"}});
+            let findUserBag:any=await userBag.find({where:{user:{id:unpack.id},block:"null"}});
               //nếu không tìm thấy giỏ
               if(findUserBag.length==0){
                 return {
@@ -244,7 +244,7 @@ import jsonWeb1 from "./../services/jwt/index"
                 //tìm sản phẩm trong giỏ
                 const userCartRepository = connection.getRepository(Cart);
                 // let findProductInCart=await userCartRepository.find({where:{products:{id:data.id}}});
-                let findProductInCart=await userCartRepository.find({where:{products:{id:data.id}}});
+                let findProductInCart=await userCartRepository.find({where:{products:{id:data.id},bag:{id:findUserBag[0]?.id}}});
                  //nếu không tìm thấy trong giỏ
                  if(findProductInCart.length==0){
                     return {
